@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://msr-standard.org/schemas/msr-1.1.json",
+  "title": "MSR JSON Protocol Schema (Legacy v1.1)",
+  "description": "Legacy compatibility schema bridging PAD XML v3/v4 to initial JSON representation.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "pad_version",
+    "vendor",
+    "software",
+    "release"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "pad_version": {
+      "type": "string",
+      "enum": [
+        "1.0",
+        "1.1"
+      ]
+    },
+    "vendor": {
+      "type": "object",
+      "required": [
+        "name",
+        "website"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "support_url": {
+          "type": "string"
+        }
+      }
+    },
+    "software": {
+      "type": "object",
+      "required": [
+        "name",
+        "slug",
+        "kind",
+        "platforms",
+        "homepage"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "homepage": {
+          "type": "string"
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "required": [
+        "version",
+        "released_on"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "released_on": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

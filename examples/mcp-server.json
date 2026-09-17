@@ -1,0 +1,88 @@
+{
+  "$schema": "https://msr-standard.org/schemas/msr-2.0.json",
+  "protocol": {
+    "name": "MSR JSON",
+    "version": "2.0.0",
+    "author": "MSR Standard Working Group",
+    "specification_license": "CC-BY-4.0",
+    "reference_implementation_license": "MIT",
+    "canonical_url": "https://dbmcp.tools/.well-known/msr.json"
+  },
+  "entity": {
+    "name": "Database Inspector MCP Server",
+    "slug": "db-inspector-mcp",
+    "domain": "dbmcp.tools",
+    "type": "mcp-server",
+    "license": {
+      "type": "open-source",
+      "spdx_id": "MIT",
+      "commercial_terms": "free"
+    },
+    "vendor": {
+      "name": "DevTools Collective",
+      "website": "https://dbmcp.tools",
+      "country_code": "NL",
+      "support_url": "https://github.com/dbmcp/server/issues"
+    },
+    "descriptions": {
+      "en": {
+        "tagline": "Safe read-only database query execution and schema inspection tools for AI coding assistants.",
+        "summary": "Standard Model Context Protocol server exposing verified schema exploration and query planning to AI agents.",
+        "text": "Integrates directly with Claude Code, Cursor, and Gemini CLI to grant controlled, read-only SQL inspection with explain-plan validation."
+      }
+    }
+  },
+  "capabilities": {
+    "deployment": [
+      "self-hosted",
+      "docker"
+    ],
+    "interfaces": {
+      "mcp": {
+        "version": "2024-11-05",
+        "transport": "stdio",
+        "endpoint": "https://dbmcp.tools/mcp/sse",
+        "tools_count": 6,
+        "schema_url": "https://dbmcp.tools/schemas/mcp-tools.json"
+      }
+    },
+    "pricing": {
+      "model": "free",
+      "starting_price_cents": 0,
+      "currency": "USD"
+    },
+    "integrations": [
+      "claude",
+      "cursor",
+      "gemini",
+      "postgresql",
+      "mysql",
+      "sqlite"
+    ]
+  },
+  "releases": {
+    "latest": {
+      "version": "1.4.2",
+      "published_at": "2026-09-14T18:30:00Z",
+      "release_type": "patch",
+      "changelog_url": "https://github.com/dbmcp/server/releases/tag/v1.4.2",
+      "artifacts": [
+        {
+          "platform": "docker",
+          "uri": "docker.io/dbmcp/server:1.4.2",
+          "sha256": "3a879e64e1074e64f89d5f76b5d92df9926f2127dbfc20e29b14798993ee3024"
+        }
+      ]
+    }
+  },
+  "trust": {
+    "domain_verification": {
+      "method": "well-known-http",
+      "status": "verified",
+      "verified_at": "2026-09-14T18:35:00Z"
+    }
+  },
+  "telemetry": {
+    "status_page": "https://status.dbmcp.tools"
+  }
+}

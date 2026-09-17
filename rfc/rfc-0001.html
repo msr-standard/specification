@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFC 0001 — MSR JSON Protocol Core Specification | MSR Standard</title>
+  <link rel="canonical" href="https://msr-standard.org/rfc/rfc-0001.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-link">
+        <img src="/assets/img/msr-logo.svg" alt="MSR Standard" class="brand-logo">
+      </a>
+      <div class="nav-meta-badge">
+        <span class="dot"></span> Protocol v2.0.0
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="max-width: 860px;">
+    <div style="margin-bottom: 2rem;">
+      <a href="/rfc/" style="font-size: 0.875rem; color: var(--text-subtle);">← Back to RFC Index</a>
+    </div>
+
+    <div
+      style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8125rem; margin-bottom: 2rem;">
+      <div><strong>RFC:</strong> 0001</div>
+      <div><strong>Title:</strong> MSR JSON Protocol Core Specification &amp; Wire Format</div>
+      <div><strong>Author:</strong> Antonio Santos &lt;protocol@msr-standard.org&gt;</div>
+      <div><strong>Status:</strong> Final Accepted Standard</div>
+      <div><strong>Date:</strong> 2026-09-17</div>
+      <div><strong>Replaces:</strong> RFC 0000-C, ASP PAD XML 4.0</div>
+    </div>
+
+    <h2>1. Introduction</h2>
+    <p>
+      This document defines the wire format, semantics, and HTTP retrieval mechanisms for the MSR JSON Protocol
+      (Metadata for Software Registry) version 2.0.0.
+    </p>
+
+    <h2>2. Canonical Endpoint Discovery</h2>
+    <p>
+      An entity publishing an authoritative MSR manifest MUST serve the payload over TLS at the well-known URI:
+    </p>
+    <div class="code-container">
+      <pre class="code-block"><code>https://&lt;domain&gt;/.well-known/msr.json</code></pre>
+    </div>
+    <p>
+      Clients crawling this URI MUST send an HTTP <code>Accept</code> header containing
+      <code>application/json, application/schema+json;q=0.9</code>. Servers SHOULD respond with
+      <code>Content-Type: application/json; charset=utf-8</code> and appropriate <code>Cache-Control</code> directives.
+    </p>
+
+    <h2>3. Mandatory Payload Sections</h2>
+    <p>
+      Conforming manifests MUST define:
+    </p>
+    <ul>
+      <li><code>$schema</code>: Direct HTTPS URI to the canonical schema.</li>
+      <li><code>protocol</code>: Name, version, and license attributions.</li>
+      <li><code>entity</code>: Machine slug, primary domain, archetype, and localized descriptions.</li>
+      <li><code>capabilities</code>: Deployment modes, interfaces, and pricing.</li>
+      <li><code>releases</code>: Release version, release date, and binary artifacts.</li>
+    </ul>
+
+    <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+      <p style="font-size: 0.875rem; color: var(--text-subtle);">
+        For full normative schema tables and field definitions, see the <a href="/specification/">Full
+          Specification</a>.
+      </p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-bottom" style="border: none; justify-content: center;">
+      <div>MSR JSON RFC Series · Published under CC-BY 4.0</div>
+    </div>
+  </footer>
+</body>
+
+</html>

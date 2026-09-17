@@ -1,0 +1,532 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://msr-standard.org/schemas/msr-2.0.json",
+  "title": "MSR JSON Protocol Schema",
+  "description": "Canonical JSON Schema for MSR JSON v2.0 software, API, MCP server, and AI agent manifests.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "protocol",
+    "entity",
+    "capabilities",
+    "releases"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "URI of the MSR JSON schema against which this manifest was authored."
+    },
+    "protocol": {
+      "type": "object",
+      "description": "Protocol provenance, specification compliance, and licensing metadata.",
+      "required": [
+        "name",
+        "version",
+        "author",
+        "specification_license",
+        "reference_implementation_license"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "const": "MSR JSON",
+          "description": "Official protocol identifier."
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^2\\.[0-9]+(?:\\.[0-9]+)?$",
+          "description": "Protocol version conforming to SemVer (e.g. 2.0 or 2.0.0)."
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Author or standard organization maintaining the specification."
+        },
+        "specification_license": {
+          "type": "string",
+          "description": "SPDX identifier of the protocol specification license (e.g. CC-BY-4.0)."
+        },
+        "reference_implementation_license": {
+          "type": "string",
+          "description": "SPDX identifier of the reference tooling license (e.g. MIT)."
+        },
+        "canonical_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The authoritative public URL of this manifest."
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "description": "Identity, categorization, and localized descriptions of the software entity.",
+      "required": [
+        "name",
+        "slug",
+        "domain",
+        "type",
+        "descriptions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Official display name of the product, tool, API, or agent."
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "maxLength": 64,
+          "description": "Unique lowercase kebab-case machine identifier."
+        },
+        "domain": {
+          "type": "string",
+          "pattern": "^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$",
+          "description": "Primary authoritative Fully Qualified Domain Name (FQDN)."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "saas",
+            "ai-agent",
+            "mcp-server",
+            "api",
+            "software",
+            "open-source",
+            "framework",
+            "library",
+            "plugin",
+            "extension",
+            "desktop",
+            "mobile"
+          ],
+          "description": "Primary architectural archetype of the entity."
+        },
+        "license": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "open-source",
+                "proprietary",
+                "freeware",
+                "commercial",
+                "dual"
+              ]
+            },
+            "spdx_id": {
+              "type": "string"
+            },
+            "commercial_terms": {
+              "type": "string",
+              "enum": [
+                "free",
+                "freemium",
+                "paid",
+                "subscription",
+                "custom"
+              ]
+            }
+          }
+        },
+        "vendor": {
+          "type": "object",
+          "required": [
+            "name",
+            "website"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "website": {
+              "type": "string",
+              "format": "uri"
+            },
+            "country_code": {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$"
+            },
+            "support_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "descriptions": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tagline": {
+                "type": "string",
+                "maxLength": 140
+              },
+              "summary": {
+                "type": "string",
+                "maxLength": 256
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "description": "Deployment models, functional interfaces, pricing, and integrations.",
+      "required": [
+        "deployment"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "deployment": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "cloud",
+              "self-hosted",
+              "on-premise",
+              "hybrid",
+              "desktop",
+              "mobile",
+              "edge",
+              "docker"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "interfaces": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mcp": {
+              "type": "object",
+              "required": [
+                "version",
+                "transport"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "version": {
+                  "type": "string"
+                },
+                "transport": {
+                  "type": "string",
+                  "enum": [
+                    "sse",
+                    "stdio",
+                    "streamable-http",
+                    "websocket"
+                  ]
+                },
+                "endpoint": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "tools_count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "schema_url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            "openapi": {
+              "type": "object",
+              "required": [
+                "version",
+                "spec_url"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "version": {
+                  "type": "string"
+                },
+                "spec_url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            "graphql": {
+              "type": "object",
+              "required": [
+                "endpoint"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "endpoint": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "schema_url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            "grpc": {
+              "type": "object",
+              "required": [
+                "proto_url"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "proto_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                }
+              }
+            }
+          }
+        },
+        "pricing": {
+          "type": "object",
+          "required": [
+            "model"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "model": {
+              "type": "string",
+              "enum": [
+                "free",
+                "freemium",
+                "subscription",
+                "usage",
+                "one-time",
+                "quote"
+              ]
+            },
+            "starting_price_cents": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            }
+          }
+        },
+        "integrations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "releases": {
+      "type": "object",
+      "description": "Release distribution, versioning, and download artifacts.",
+      "required": [
+        "latest"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "latest": {
+          "type": "object",
+          "required": [
+            "version",
+            "published_at"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "published_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "release_type": {
+              "type": "string",
+              "enum": [
+                "major",
+                "minor",
+                "patch",
+                "security",
+                "initial"
+              ]
+            },
+            "changelog_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "artifacts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "platform",
+                  "uri"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "platform": {
+                    "type": "string"
+                  },
+                  "uri": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "size_bytes": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "trust": {
+      "type": "object",
+      "description": "Cryptographic attestations, domain ownership verification, and audits.",
+      "additionalProperties": false,
+      "properties": {
+        "domain_verification": {
+          "type": "object",
+          "required": [
+            "method",
+            "status"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": [
+                "dns-txt",
+                "well-known-http",
+                "tls-alpn"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "verified",
+                "pending",
+                "revoked"
+              ]
+            },
+            "verified_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "signatures": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "enum": [
+                "ed25519",
+                "ecdsa-p256",
+                "rsa-pss-4096"
+              ]
+            },
+            "public_key": {
+              "type": "string"
+            },
+            "manifest_signature": {
+              "type": "string"
+            }
+          }
+        },
+        "audit_receipt": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "auditor": {
+              "type": "string"
+            },
+            "audit_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "audit_date": {
+              "type": "string",
+              "format": "date"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "passed",
+                "passed_with_findings",
+                "failed"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "description": "Uptime monitoring links and event notification webhook endpoints.",
+      "additionalProperties": false,
+      "properties": {
+        "status_page": {
+          "type": "string",
+          "format": "uri"
+        },
+        "webhook": {
+          "type": "object",
+          "required": [
+            "url",
+            "events"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "events": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

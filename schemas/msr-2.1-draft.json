@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://msr-standard.org/schemas/msr-2.1-draft.json",
+  "title": "MSR JSON Protocol Schema (v2.1 Draft)",
+  "description": "Experimental draft schema adding agent sandboxing, A2A messaging endpoints, and multi-signature attestation.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "protocol",
+    "entity",
+    "capabilities",
+    "releases"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "protocol": {
+      "type": "object"
+    },
+    "entity": {
+      "type": "object"
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "type": "array"
+        },
+        "interfaces": {
+          "type": "object"
+        },
+        "ai_sandbox": {
+          "type": "object",
+          "description": "Experimental RFC-0004: Execution boundary specification for autonomous AI agents.",
+          "properties": {
+            "isolation_level": {
+              "type": "string",
+              "enum": [
+                "process",
+                "container",
+                "microvm",
+                "wasm"
+              ]
+            },
+            "network_egress": {
+              "type": "string",
+              "enum": [
+                "none",
+                "restricted-domain",
+                "unrestricted"
+              ]
+            },
+            "filesystem": {
+              "type": "string",
+              "enum": [
+                "read-only",
+                "ephemeral",
+                "persistent"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "releases": {
+      "type": "object"
+    },
+    "trust": {
+      "type": "object"
+    },
+    "telemetry": {
+      "type": "object"
+    }
+  }
+}

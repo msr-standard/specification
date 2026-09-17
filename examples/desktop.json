@@ -1,0 +1,88 @@
+{
+  "$schema": "https://msr-standard.org/schemas/msr-2.0.json",
+  "protocol": {
+    "name": "MSR JSON",
+    "version": "2.0.0",
+    "author": "MSR Standard Working Group",
+    "specification_license": "CC-BY-4.0",
+    "reference_implementation_license": "MIT",
+    "canonical_url": "https://vectorsmith.app/.well-known/msr.json"
+  },
+  "entity": {
+    "name": "VectorSmith Studio",
+    "slug": "vectorsmith",
+    "domain": "vectorsmith.app",
+    "type": "desktop",
+    "license": {
+      "type": "commercial",
+      "spdx_id": "Proprietary",
+      "commercial_terms": "paid"
+    },
+    "vendor": {
+      "name": "VectorSmith Graphics UG",
+      "website": "https://vectorsmith.app",
+      "country_code": "DE",
+      "support_url": "https://vectorsmith.app/support"
+    },
+    "descriptions": {
+      "en": {
+        "tagline": "GPU-accelerated vector typography and parametric icon editor for desktop.",
+        "summary": "Professional native vector illustration and icon design software optimized for macOS, Windows, and Linux.",
+        "text": "VectorSmith uses Metal and Vulkan shaders to render complex bezier node trees at 120 FPS with instant SVG/PDF export."
+      }
+    }
+  },
+  "capabilities": {
+    "deployment": [
+      "desktop"
+    ],
+    "pricing": {
+      "model": "one-time",
+      "starting_price_cents": 7900,
+      "currency": "EUR"
+    },
+    "integrations": [
+      "figma",
+      "inkscape",
+      "blender"
+    ]
+  },
+  "releases": {
+    "latest": {
+      "version": "2.5.0",
+      "published_at": "2026-09-16T11:00:00Z",
+      "release_type": "minor",
+      "changelog_url": "https://vectorsmith.app/updates/2.5.0",
+      "artifacts": [
+        {
+          "platform": "windows-x64",
+          "uri": "https://download.vectorsmith.app/VectorSmith-2.5.0-Setup.exe",
+          "sha256": "5f4dcc3b5aa765d61d8327deb882cf992b9699aaf5e4b77f154ef9ff729f8f2e",
+          "size_bytes": 84201984
+        },
+        {
+          "platform": "macos-universal",
+          "uri": "https://download.vectorsmith.app/VectorSmith-2.5.0.dmg",
+          "sha256": "8a3e7b16584c311497bb7553bb85f67a2cb647a752627e7f53f92931215444cf",
+          "size_bytes": 91226112
+        },
+        {
+          "platform": "linux-appimage",
+          "uri": "https://download.vectorsmith.app/VectorSmith-2.5.0.AppImage",
+          "sha256": "1e2f3a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcde",
+          "size_bytes": 88080384
+        }
+      ]
+    }
+  },
+  "trust": {
+    "domain_verification": {
+      "method": "dns-txt",
+      "status": "verified",
+      "verified_at": "2026-07-10T14:00:00Z"
+    }
+  },
+  "telemetry": {
+    "status_page": "https://status.vectorsmith.app"
+  }
+}

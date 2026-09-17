@@ -1,0 +1,84 @@
+{
+  "$schema": "https://msr-standard.org/schemas/msr-2.0.json",
+  "protocol": {
+    "name": "MSR JSON",
+    "version": "2.0.0",
+    "author": "MSR Standard Working Group",
+    "specification_license": "CC-BY-4.0",
+    "reference_implementation_license": "MIT",
+    "canonical_url": "https://fastkv.dev/.well-known/msr.json"
+  },
+  "entity": {
+    "name": "FastKV Distributed Cache Engine",
+    "slug": "fastkv",
+    "domain": "fastkv.dev",
+    "type": "open-source",
+    "license": {
+      "type": "open-source",
+      "spdx_id": "MIT",
+      "commercial_terms": "free"
+    },
+    "vendor": {
+      "name": "FastKV Maintainers",
+      "website": "https://fastkv.dev",
+      "country_code": "CA",
+      "support_url": "https://github.com/fastkv/fastkv/issues"
+    },
+    "descriptions": {
+      "en": {
+        "tagline": "Lock-free, ultra-low latency in-memory key-value storage engine in Rust.",
+        "summary": "High-concurrency embedded key-value engine with zero-copy serialization and Raft replication.",
+        "text": "Designed for real-time edge caches and microsecond stream processors, offering full ACID transactions with snapshot isolation."
+      }
+    }
+  },
+  "capabilities": {
+    "deployment": [
+      "self-hosted",
+      "desktop",
+      "edge",
+      "docker"
+    ],
+    "pricing": {
+      "model": "free",
+      "starting_price_cents": 0,
+      "currency": "USD"
+    },
+    "integrations": [
+      "rust",
+      "python",
+      "golang",
+      "redis-protocol"
+    ]
+  },
+  "releases": {
+    "latest": {
+      "version": "3.0.1",
+      "published_at": "2026-09-08T16:00:00Z",
+      "release_type": "patch",
+      "changelog_url": "https://github.com/fastkv/fastkv/releases/tag/v3.0.1",
+      "artifacts": [
+        {
+          "platform": "linux-x86_64",
+          "uri": "https://github.com/fastkv/fastkv/releases/download/v3.0.1/fastkv-linux-amd64.tar.gz",
+          "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"
+        },
+        {
+          "platform": "darwin-arm64",
+          "uri": "https://github.com/fastkv/fastkv/releases/download/v3.0.1/fastkv-darwin-arm64.tar.gz",
+          "sha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d"
+        }
+      ]
+    }
+  },
+  "trust": {
+    "domain_verification": {
+      "method": "well-known-http",
+      "status": "verified",
+      "verified_at": "2026-09-08T16:05:00Z"
+    }
+  },
+  "telemetry": {
+    "status_page": "https://status.fastkv.dev"
+  }
+}

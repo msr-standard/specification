@@ -1,0 +1,84 @@
+{
+  "$schema": "https://msr-standard.org/schemas/msr-2.0.json",
+  "protocol": {
+    "name": "MSR JSON",
+    "version": "2.0.0",
+    "author": "MSR Standard Working Group",
+    "specification_license": "CC-BY-4.0",
+    "reference_implementation_license": "MIT",
+    "canonical_url": "https://synapseagent.ai/.well-known/msr.json"
+  },
+  "entity": {
+    "name": "Synapse Code Auditor Agent",
+    "slug": "synapse-auditor",
+    "domain": "synapseagent.ai",
+    "type": "ai-agent",
+    "license": {
+      "type": "proprietary",
+      "spdx_id": "Proprietary",
+      "commercial_terms": "paid"
+    },
+    "vendor": {
+      "name": "Synapse Cognitive Systems",
+      "website": "https://synapseagent.ai",
+      "country_code": "US",
+      "support_url": "https://synapseagent.ai/support"
+    },
+    "descriptions": {
+      "en": {
+        "tagline": "Autonomous security vulnerability triage and patch verification agent.",
+        "summary": "Autonomous AI agent that monitors Git pull requests, executes static analysis in sandboxes, and verifies remediations.",
+        "text": "Synapse inspects multi-file refactors against CVE registries, generating reproduction unit tests and suggested patches without human intervention."
+      }
+    }
+  },
+  "capabilities": {
+    "deployment": [
+      "cloud",
+      "docker"
+    ],
+    "interfaces": {
+      "mcp": {
+        "version": "2024-11-05",
+        "transport": "sse",
+        "endpoint": "https://api.synapseagent.ai/mcp/sse",
+        "tools_count": 12,
+        "schema_url": "https://synapseagent.ai/schemas/tools.json"
+      }
+    },
+    "pricing": {
+      "model": "usage",
+      "starting_price_cents": 25,
+      "currency": "USD"
+    },
+    "integrations": [
+      "github",
+      "gitlab",
+      "jira",
+      "docker"
+    ]
+  },
+  "releases": {
+    "latest": {
+      "version": "2.3.0",
+      "published_at": "2026-09-10T12:00:00Z",
+      "release_type": "minor",
+      "changelog_url": "https://synapseagent.ai/changelog/2.3.0"
+    }
+  },
+  "trust": {
+    "domain_verification": {
+      "method": "dns-txt",
+      "status": "verified",
+      "verified_at": "2026-08-20T09:15:00Z"
+    },
+    "signatures": {
+      "algorithm": "ed25519",
+      "public_key": "MCowBQYDK2VwAyEA47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuqU=",
+      "manifest_signature": "25f54316a30c51b7596b63ab38a6a666eef705a6fb7a71f005d53a9ba011f01c238b74c52084e3d37651dd07945d812d1b70a0c4f1c1f51397858c82ab4d470a"
+    }
+  },
+  "telemetry": {
+    "status_page": "https://status.synapseagent.ai"
+  }
+}

@@ -1,0 +1,33 @@
+# Agent and workstation rules live in the private website repository, never here:
+# they carry host paths and container names that mean nothing to a fork.
+.claude/
+.agents/
+
+# Workstation-local editor state: window colours differ per machine.
+.vscode/
+*.code-workspace
+
+# Build and tooling artifacts. Note: the container runs as root, so
+# .pytest_cache/ lands root-owned and needs sudo to remove by hand.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.log
+
+# Secrets by EXTENSION rather than by filename: a per-file rule elsewhere in
+# this workstation let through a token that arrived after the rule was written.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.token
+
+# Credentials dropped next to the CI, which IS versioned. Never ignore all of
+# .github/: a blanket rule in a sister project silently excluded every workflow
+# from version control.
+.github/api-key

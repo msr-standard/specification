@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFC 0002 — MCP &amp; AI Agent Capability Descriptors | MSR Standard</title>
+  <link rel="canonical" href="https://msr-standard.org/rfc/rfc-0002.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-link">
+        <img src="/assets/img/msr-logo.svg" alt="MSR Standard" class="brand-logo">
+      </a>
+      <div class="nav-meta-badge">
+        <span class="dot"></span> Protocol v2.0.0
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="max-width: 860px;">
+    <div style="margin-bottom: 2rem;">
+      <a href="/rfc/" style="font-size: 0.875rem; color: var(--text-subtle);">← Back to RFC Index</a>
+    </div>
+
+    <div
+      style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8125rem; margin-bottom: 2rem;">
+      <div><strong>RFC:</strong> 0002</div>
+      <div><strong>Title:</strong> Standardized Capability Descriptors for MCP Servers and AI Agents</div>
+      <div><strong>Author:</strong> AI Tooling Working Group &lt;ai-tools@msr-standard.org&gt;</div>
+      <div><strong>Status:</strong> Final Accepted Standard</div>
+      <div><strong>Date:</strong> 2026-09-15</div>
+    </div>
+
+    <h2>1. Motivation</h2>
+    <p>
+      Autonomous AI coding assistants and agent frameworks (Claude Code, Cursor, Gemini CLI, LangChain) require
+      standardized discovery mechanisms to locate available Model Context Protocol (MCP) servers and tools.
+    </p>
+
+    <h2>2. Schema Extensions</h2>
+    <p>
+      RFC 0002 introduces the <code>capabilities.interfaces.mcp</code> object into the canonical MSR schema:
+    </p>
+    <div class="code-container">
+      <pre class="code-block"><code>"interfaces": {
+  "mcp": {
+    "version": "2024-11-05",
+    "transport": "sse",
+    "endpoint": "https://api.example.org/mcp/sse",
+    "tools_count": 8,
+    "schema_url": "https://api.example.org/mcp/schema.json"
+  }
+}</code></pre>
+    </div>
+
+    <h2>3. Transport Protocols</h2>
+    <p>
+      The <code>transport</code> field MUST specify one of:
+    </p>
+    <ul>
+      <li><code>"sse"</code>: Server-Sent Events over HTTPS for cloud and container hosted servers.</li>
+      <li><code>"stdio"</code>: Standard Input/Output streaming for local command-line and desktop tools.</li>
+      <li><code>"streamable-http"</code>: Bidirectional chunked HTTP transfer.</li>
+    </ul>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-bottom" style="border: none; justify-content: center;">
+      <div>MSR JSON RFC Series · Published under CC-BY 4.0</div>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://msr-standard.org/schemas/msr-2.0.json",
+  "protocol": {
+    "name": "MSR JSON",
+    "version": "2.0.0",
+    "author": "MSR Standard Working Group",
+    "specification_license": "CC-BY-4.0",
+    "reference_implementation_license": "MIT",
+    "canonical_url": "https://geoapigateway.org/.well-known/msr.json"
+  },
+  "entity": {
+    "name": "GeoSpatial Vector Gateway API",
+    "slug": "geospatial-gateway",
+    "domain": "geoapigateway.org",
+    "type": "api",
+    "license": {
+      "type": "open-source",
+      "spdx_id": "Apache-2.0",
+      "commercial_terms": "free"
+    },
+    "vendor": {
+      "name": "Open Spatial Foundation",
+      "website": "https://geoapigateway.org",
+      "country_code": "DE",
+      "support_url": "https://geoapigateway.org/contact"
+    },
+    "descriptions": {
+      "en": {
+        "tagline": "High-performance vector tiling and reverse-geocoding API gateway.",
+        "summary": "High-throughput global spatial calculation and reverse geocoding API with sub-10ms response times.",
+        "text": "Provides standard GeoJSON, MVT, and gRPC protobuf endpoints for global cadastral and terrain calculations."
+      }
+    }
+  },
+  "capabilities": {
+    "deployment": [
+      "cloud",
+      "self-hosted",
+      "docker"
+    ],
+    "interfaces": {
+      "openapi": {
+        "version": "3.1.0",
+        "spec_url": "https://geoapigateway.org/specs/openapi.json"
+      },
+      "grpc": {
+        "proto_url": "https://geoapigateway.org/specs/geospatial.proto",
+        "port": 50051
+      }
+    },
+    "pricing": {
+      "model": "free",
+      "starting_price_cents": 0,
+      "currency": "EUR"
+    },
+    "integrations": [
+      "postgis",
+      "leaflet",
+      "maplibre"
+    ]
+  },
+  "releases": {
+    "latest": {
+      "version": "2.1.0",
+      "published_at": "2026-09-01T10:00:00Z",
+      "release_type": "minor",
+      "changelog_url": "https://geoapigateway.org/releases/2.1.0"
+    }
+  },
+  "trust": {
+    "domain_verification": {
+      "method": "well-known-http",
+      "status": "verified",
+      "verified_at": "2026-09-01T10:05:00Z"
+    }
+  },
+  "telemetry": {
+    "status_page": "https://status.geoapigateway.org"
+  }
+}

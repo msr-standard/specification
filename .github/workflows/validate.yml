@@ -1,0 +1,25 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - run: pip install -r requirements-test.txt
+
+      # Project rule 4: every manifest in examples/ must validate strictly
+      # against the canonical schema, with zero errors. This runs the same
+      # suite a fork runs locally — that is the point of it.
+      - run: python -m pytest tests -q

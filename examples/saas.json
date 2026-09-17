@@ -1,0 +1,83 @@
+{
+  "$schema": "https://msr-standard.org/schemas/msr-2.0.json",
+  "protocol": {
+    "name": "MSR JSON",
+    "version": "2.0.0",
+    "author": "MSR Standard Working Group",
+    "specification_license": "CC-BY-4.0",
+    "reference_implementation_license": "MIT",
+    "canonical_url": "https://cloudmetrics.io/.well-known/msr.json"
+  },
+  "entity": {
+    "name": "CloudMetrics Observability",
+    "slug": "cloudmetrics",
+    "domain": "cloudmetrics.io",
+    "type": "saas",
+    "license": {
+      "type": "proprietary",
+      "spdx_id": "Proprietary",
+      "commercial_terms": "subscription"
+    },
+    "vendor": {
+      "name": "CloudMetrics Inc.",
+      "website": "https://cloudmetrics.io",
+      "country_code": "US",
+      "support_url": "https://cloudmetrics.io/support"
+    },
+    "descriptions": {
+      "en": {
+        "tagline": "Real-time distributed telemetry and synthetic tracing for Kubernetes workloads.",
+        "summary": "Enterprise cloud observability platform with anomaly detection and automated alert triage.",
+        "text": "CloudMetrics ingests high-throughput OpenTelemetry metrics and traces to provide instant root-cause analysis for microservices."
+      }
+    }
+  },
+  "capabilities": {
+    "deployment": [
+      "cloud",
+      "hybrid"
+    ],
+    "interfaces": {
+      "openapi": {
+        "version": "3.1.0",
+        "spec_url": "https://api.cloudmetrics.io/v2/openapi.json"
+      }
+    },
+    "pricing": {
+      "model": "subscription",
+      "starting_price_cents": 4900,
+      "currency": "USD"
+    },
+    "integrations": [
+      "kubernetes",
+      "datadog",
+      "slack",
+      "pagerduty"
+    ]
+  },
+  "releases": {
+    "latest": {
+      "version": "4.12.0",
+      "published_at": "2026-09-12T08:00:00Z",
+      "release_type": "minor",
+      "changelog_url": "https://cloudmetrics.io/changelog/4.12.0"
+    }
+  },
+  "trust": {
+    "domain_verification": {
+      "method": "dns-txt",
+      "status": "verified",
+      "verified_at": "2026-08-15T14:22:00Z"
+    }
+  },
+  "telemetry": {
+    "status_page": "https://status.cloudmetrics.io",
+    "webhook": {
+      "url": "https://cloudmetrics.io/api/webhooks/msr",
+      "events": [
+        "release.published",
+        "status.incident"
+      ]
+    }
+  }
+}

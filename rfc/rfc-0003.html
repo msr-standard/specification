@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFC 0003 — Cryptographic Signatures &amp; Verification | MSR Standard</title>
+  <link rel="canonical" href="https://msr-standard.org/rfc/rfc-0003.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-link">
+        <img src="/assets/img/msr-logo.svg" alt="MSR Standard" class="brand-logo">
+      </a>
+      <div class="nav-meta-badge">
+        <span class="dot"></span> Protocol v2.0.0
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="max-width: 860px;">
+    <div style="margin-bottom: 2rem;">
+      <a href="/rfc/" style="font-size: 0.875rem; color: var(--text-subtle);">← Back to RFC Index</a>
+    </div>
+
+    <div
+      style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8125rem; margin-bottom: 2rem;">
+      <div><strong>RFC:</strong> 0003</div>
+      <div><strong>Title:</strong> Cryptographic Signatures and Root-Domain Trust Verification</div>
+      <div><strong>Author:</strong> Security &amp; Cryptography Working Group &lt;security@msr-standard.org&gt;</div>
+      <div><strong>Status:</strong> Final Accepted Standard</div>
+      <div><strong>Date:</strong> 2026-08-30</div>
+    </div>
+
+    <h2>1. Threat Model</h2>
+    <p>
+      In a decentralized registry environment, malicious actors could attempt to publish counterfeit manifests claiming
+      authority over third-party domains. RFC 0003 introduces two layers of defense:
+    </p>
+    <ol>
+      <li><strong>DNS TXT Authority Challenge:</strong> Domain owners publish a TXT token at
+        <code>_msr-challenge.&lt;domain&gt;</code>.</li>
+      <li><strong>Canonical Payload Signing:</strong> The manifest is signed using Ed25519 (or ECDSA P-256).</li>
+    </ol>
+
+    <h2>2. Canonical JSON Serialization (RFC 8785)</h2>
+    <p>
+      Before calculating the cryptographic signature, the manifest JSON object MUST be normalized using the Canonical
+      JSON (JCS) algorithm described in <strong>RFC 8785</strong> with the <code>trust.signatures</code> property
+      temporarily removed.
+    </p>
+
+    <h2>3. Ed25519 Wire Representation</h2>
+    <p>
+      The computed 64-byte signature is encoded as lowercase hexadecimal and placed in
+      <code>trust.signatures.manifest_signature</code>. The public key is Base64-encoded SubjectPublicKeyInfo (SPKI)
+      DER.
+    </p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-bottom" style="border: none; justify-content: center;">
+      <div>MSR JSON RFC Series · Published under CC-BY 4.0</div>
+    </div>
+  </footer>
+</body>
+
+</html>
