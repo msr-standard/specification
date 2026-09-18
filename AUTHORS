@@ -1,0 +1,26 @@
+MSR JSON — authorship
+=====================
+
+Author and creator of the protocol
+----------------------------------
+Antonio Santos
+  Esplanada, Bahia, Brazil
+  snarthost@gmail.com
+
+Antonio Santos designed and wrote the MSR JSON specification, the JSON Schemas,
+the reference manifests and the RFC series, and is the author of the Craft
+Engine framework.
+
+Attribution
+-----------
+The specification is licensed CC-BY-4.0 (see LICENSE-SPEC). Attribution is a
+condition of that license: any implementation, quotation, translation or
+derivative of the specification must credit Antonio Santos as its author.
+
+Stewardship
+-----------
+Authorship and stewardship are separate on purpose. The protocol is authored by
+one person and stewarded in the open: the RFC process, the compatibility policy
+and the neutrality charter at https://msr-standard.org/governance/ govern how it
+changes. No commercial entity controls the specification, and implementing it
+requires no permission, fee or registration.

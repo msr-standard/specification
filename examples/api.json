@@ -3,7 +3,7 @@
   "protocol": {
     "name": "MSR JSON",
     "version": "2.0.0",
-    "author": "MSR Standard Working Group",
+    "author": "Antonio Santos",
     "specification_license": "CC-BY-4.0",
     "reference_implementation_license": "MIT",
     "canonical_url": "https://geoapigateway.org/.well-known/msr.json"

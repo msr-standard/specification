@@ -76,6 +76,17 @@ policy. Additive, backwards-compatible changes are MINOR. See
 Typos, broken examples and documentation corrections are ordinary pull requests
 and are welcome as such.
 
+## Author
+
+**MSR JSON was created and authored by Antonio Santos** — Esplanada, Bahia,
+Brazil — author of the Craft Engine framework. Contact: snarthost@gmail.com.
+Full statement in [AUTHORS](AUTHORS).
+
+Attribution to the author is a condition of the CC-BY-4.0 license the
+specification is published under. Authorship and stewardship are deliberately
+separate: the protocol is authored by one person and governed in the open,
+through the RFC process and the neutrality charter.
+
 ## Licensing
 
 Dual-licensed, deliberately:

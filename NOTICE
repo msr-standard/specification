@@ -19,4 +19,11 @@ MIT — see LICENSE
     Reference code should be reusable with no strings attached, including in
     proprietary implementations.
 
+Author
+    MSR JSON was designed and written by Antonio Santos (Esplanada, Bahia,
+    Brazil), author of the Craft Engine framework. See AUTHORS.
+
+    Attribution to the author is a condition of CC-BY-4.0 and applies to every
+    implementation, quotation, translation and derivative of the specification.
+
 Implementing MSR JSON requires no permission from anyone.
