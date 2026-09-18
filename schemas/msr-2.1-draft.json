@@ -58,6 +58,11 @@
       "type": "string",
       "pattern": "^[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-(?:[A-Z]{2}|[0-9]{3}))?$",
       "description": "BCP 47 language tag: language, optional script, optional region (e.g. en, pt-BR, es-419, zh-Hant-TW)."
+    },
+    "currency_code": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 alphabetic currency code (e.g. BRL, EUR, USD), the same form as capabilities.pricing.currency."
     }
   },
   "properties": {
@@ -122,7 +127,7 @@
         },
         "availability": {
           "type": "object",
-          "description": "Experimental RFC-0006: where the product may be acquired and used, the languages it is offered in, and where customer data is stored. An absent field means not declared, never worldwide.",
+          "description": "Experimental RFC-0006: where the product may be acquired and used, the languages of its interface and of its support, the currencies it is billed in, and where customer data is stored. An absent field means not declared, never worldwide.",
           "minProperties": 1,
           "additionalProperties": false,
           "properties": {
@@ -162,6 +167,15 @@
               "uniqueItems": true,
               "description": "Languages the product's user interface and documentation are available in."
             },
+            "support_languages": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/language_tag"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Languages customer support is provided in. Independent of the interface languages."
+            },
             "data_residency": {
               "type": "array",
               "items": {
@@ -177,6 +191,15 @@
               "minItems": 1,
               "uniqueItems": true,
               "description": "Countries or regions where customer data is stored and processed at rest."
+            },
+            "currencies": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/currency_code"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Currencies the product can be billed in."
             }
           }
         }

@@ -48,8 +48,8 @@
     </p>
     <p>
       MSR JSON 2.0 carries one geographic value, <code>entity.vendor.country_code</code>. It says where the
-      vendor is based, not where the product is offered. It carries no statement of interface languages and
-      none of where customer data is stored. The keys of <code>entity.descriptions</code> look like language
+      vendor is based, not where the product is offered. It carries no statement of interface or support languages,
+      none of the currencies a customer can pay in, and none of where customer data is stored. The keys of <code>entity.descriptions</code> look like language
       tags, but nothing validates them.
     </p>
 
@@ -61,6 +61,8 @@
   "countries":          ["AO", "MZ"],
   "excluded_countries": ["CU"],
   "languages":          ["pt-BR", "en", "es-419"],
+  "support_languages":  ["pt-BR", "en"],
+  "currencies":         ["BRL", "EUR", "USD"],
   "data_residency":     ["BR", "EU"]
 }</code></pre>
     </div>
@@ -73,6 +75,8 @@
         <tr><td><code>countries</code></td><td>Countries where the product is offered, in addition to the regions</td><td>ISO 3166-1 alpha-2</td></tr>
         <tr><td><code>excluded_countries</code></td><td>Countries where the product is not offered, even though a listed region contains them</td><td>ISO 3166-1 alpha-2</td></tr>
         <tr><td><code>languages</code></td><td>Languages of the user interface and documentation</td><td>BCP 47 (language, optional script, optional region)</td></tr>
+        <tr><td><code>support_languages</code></td><td>Languages customer support is provided in</td><td>BCP 47</td></tr>
+        <tr><td><code>currencies</code></td><td>Currencies the product can be billed in</td><td>ISO 4217 alphabetic, the same form as <code>pricing.currency</code></td></tr>
         <tr><td><code>data_residency</code></td><td>Where customer data is stored and processed at rest</td><td>ISO 3166-1 alpha-2 or UN M49 region</td></tr>
       </tbody>
     </table>
@@ -88,6 +92,11 @@
       code is not a region and is rejected; countries use ISO 3166-1. The exceptionally reserved code
       <code>EU</code> is accepted for the European Union. Europe (<code>150</code>) is not the same legal
       perimeter as the EU.
+    </p>
+    <p>
+      <code>languages</code> and <code>support_languages</code> are independent: a product with an interface
+      in ten languages may answer support tickets in two. <code>currencies</code> lists every currency a
+      customer can be billed in; <code>pricing.currency</code> stays the currency of the advertised price.
     </p>
     <p>
       The same draft also constrains the keys of <code>entity.descriptions</code> to BCP 47 language tags.

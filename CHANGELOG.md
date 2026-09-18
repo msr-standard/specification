@@ -20,8 +20,8 @@ normative change is to the unratified v2.1 draft schema.
 - RFC 0006 (working draft), *Geographic and Language Availability*: an optional
   `capabilities.availability` object in `schemas/msr-2.1-draft.json` with
   `regions` (UN M49), `countries` and `excluded_countries` (ISO 3166-1
-  alpha-2), `languages` (BCP 47) and `data_residency` (country, M49 region or
-  `EU`). An absent field means not declared, never worldwide. The same draft
+  alpha-2), `languages` and `support_languages` (BCP 47), `currencies` (ISO 4217)
+  and `data_residency` (country, M49 region or `EU`). An absent field means not declared, never worldwide. The same draft
   requires `entity.descriptions` keys to be BCP 47 tags. Covered by
   `tests/test_availability.py`, which also asserts that the 2.0 schema keeps
   rejecting the block.

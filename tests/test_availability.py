@@ -1,4 +1,4 @@
-# version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18
+# version: 1.1.0 | build: 2026-09-18 | update: 2026-09-18
 """RFC-0006: geographic and language availability, in the v2.1 draft schema.
 
 The block lives only in the draft. Stable 2.0 manifests are untouched, and the
@@ -22,6 +22,8 @@ AVAILABILITY = {
     "countries": ["AO", "MZ"],
     "excluded_countries": ["CU"],
     "languages": ["pt-BR", "en", "es-419", "zh-Hant-TW"],
+    "support_languages": ["pt-BR", "en"],
+    "currencies": ["BRL", "EUR", "USD"],
     "data_residency": ["BR", "150"],
 }
 
@@ -75,6 +77,12 @@ def test_manifest_without_availability_still_validates(draft, manifest):
         ("languages", ["pt_BR"]),      # BCP 47 uses a hyphen
         ("languages", ["Portuguese"]),
         ("data_residency", ["eu"]),
+        ("support_languages", ["pt_BR"]),
+        ("support_languages", []),
+        ("currencies", ["brl"]),       # ISO 4217 is uppercase
+        ("currencies", ["R$"]),        # symbols are not codes
+        ("currencies", ["EURO"]),
+        ("currencies", ["USD", "USD"]),
         ("data_residency", ["999"]),
         ("regions", []),               # an empty list declares nothing
         ("languages", ["en", "en"]),
