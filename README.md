@@ -37,6 +37,13 @@ gatekeeper and no vendor who owns the format.
 | `rfc/rfc-0001..0003.html` | The ratified RFCs |
 | `tests/` | The conformance suite below |
 
+## Generating a manifest with an AI agent
+
+[AGENTS.md](AGENTS.md) is written for AI agents of any model asked to create an
+`msr.json` for a project: what the protocol is, the constant `protocol` block, the
+procedure, the values that must never be invented, and a tested validation
+command.
+
 ## Verify the standard yourself
 
 Nothing here is taken on trust. The suite checks that the canonical schema is
