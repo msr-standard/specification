@@ -1,0 +1,137 @@
+<!-- version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFC 0006 — Geographic and Language Availability | MSR Standard</title>
+  <link rel="canonical" href="https://msr-standard.org/rfc/rfc-0006.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-link">
+        <img src="/assets/img/msr-logo.svg" alt="MSR Standard" class="brand-logo">
+      </a>
+      <div class="nav-meta-badge">
+        <span class="dot"></span> Protocol v2.0.0
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="max-width: 860px;">
+    <div style="margin-bottom: 2rem;">
+      <a href="/rfc/" style="font-size: 0.875rem; color: var(--text-subtle);">← Back to RFC Index</a>
+    </div>
+
+    <div
+      style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8125rem; margin-bottom: 2rem;">
+      <div><strong>RFC:</strong> 0006</div>
+      <div><strong>Title:</strong> Geographic and Language Availability</div>
+      <div><strong>Author:</strong> Protocol Stewards</div>
+      <div><strong>Status:</strong> Working Draft — in <code>msr-2.1-draft.json</code> only, not ratified</div>
+      <div><strong>Date:</strong> 2026-09-18</div>
+    </div>
+
+    <h2>1. Motivation</h2>
+    <p>
+      Many products can only be bought or used in some countries. Licensing, export control, payment
+      providers, tax registration and data-protection law all draw geographic lines. A registry that cannot
+      read those lines lists a product to people who cannot buy it, and an AI agent recommends software a
+      user is not allowed to use.
+    </p>
+    <p>
+      MSR JSON 2.0 carries one geographic value, <code>entity.vendor.country_code</code>. It says where the
+      vendor is based, not where the product is offered. It carries no statement of interface languages and
+      none of where customer data is stored. The keys of <code>entity.descriptions</code> look like language
+      tags, but nothing validates them.
+    </p>
+
+    <h2>2. Schema Extension</h2>
+    <p>RFC 0006 adds an optional <code>capabilities.availability</code> object:</p>
+    <div class="code-container">
+      <pre class="code-block"><code>"availability": {
+  "regions":            ["019", "150"],
+  "countries":          ["AO", "MZ"],
+  "excluded_countries": ["CU"],
+  "languages":          ["pt-BR", "en", "es-419"],
+  "data_residency":     ["BR", "EU"]
+}</code></pre>
+    </div>
+    <table class="tech-table">
+      <thead>
+        <tr><th>Field</th><th>Meaning</th><th>Code system</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>regions</code></td><td>Regions where the product is offered</td><td>UN M49 region codes, as used by BCP 47 and Unicode CLDR</td></tr>
+        <tr><td><code>countries</code></td><td>Countries where the product is offered, in addition to the regions</td><td>ISO 3166-1 alpha-2</td></tr>
+        <tr><td><code>excluded_countries</code></td><td>Countries where the product is not offered, even though a listed region contains them</td><td>ISO 3166-1 alpha-2</td></tr>
+        <tr><td><code>languages</code></td><td>Languages of the user interface and documentation</td><td>BCP 47 (language, optional script, optional region)</td></tr>
+        <tr><td><code>data_residency</code></td><td>Where customer data is stored and processed at rest</td><td>ISO 3166-1 alpha-2 or UN M49 region</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Every field is optional, and at least one must be present when the object is present. Every list is
+      non-empty and holds no duplicates. Unknown keys are rejected.
+    </p>
+    <p>
+      The accepted region codes are <code>001</code> (World), the continents <code>002</code> Africa,
+      <code>019</code> Americas, <code>142</code> Asia, <code>150</code> Europe and <code>009</code> Oceania,
+      and their CLDR sub-regions (for example <code>419</code> Latin America and the Caribbean,
+      <code>005</code> South America, <code>003</code> North America). A three-digit M49 <em>country</em>
+      code is not a region and is rejected; countries use ISO 3166-1. The exceptionally reserved code
+      <code>EU</code> is accepted for the European Union. Europe (<code>150</code>) is not the same legal
+      perimeter as the EU.
+    </p>
+    <p>
+      The same draft also constrains the keys of <code>entity.descriptions</code> to BCP 47 language tags.
+    </p>
+
+    <h2>3. Semantics</h2>
+    <ol>
+      <li><strong>Absent means not declared, never worldwide.</strong> A registry MUST NOT treat a manifest
+        without <code>regions</code> or <code>countries</code> as available everywhere. A publisher that
+        means worldwide declares <code>"regions": ["001"]</code>.</li>
+      <li><strong>The offered set</strong> is the union of the countries contained in <code>regions</code>
+        and those in <code>countries</code>, minus <code>excluded_countries</code>. Exclusion wins over
+        inclusion.</li>
+      <li><strong>Region containment</strong> is resolved with the Unicode CLDR territory containment data,
+        not with a list maintained by this specification.</li>
+      <li><strong>Where the product is offered and where data lives are separate statements.</strong> A
+        product offered worldwide may keep all data in one country. Registries SHOULD offer separate filters
+        for the two.</li>
+      <li>These are claims the publisher makes about its own product. They carry the same weight as the
+        manifest's other claims and no more. <code>data_residency</code> is not a compliance certification.</li>
+    </ol>
+
+    <h2>4. Compatibility</h2>
+    <p>
+      MSR JSON 2.0 closes <code>capabilities</code> with <code>additionalProperties: false</code>. Adding the
+      object to 2.0 would make a 2.0 validator reject manifests that use it. The change therefore lives in the
+      v2.1 draft schema only. No 2.0 manifest changes meaning, and no 2.0 validator changes behavior.
+    </p>
+
+    <h2>5. Security and Privacy Considerations</h2>
+    <ul>
+      <li>A false <code>data_residency</code> claim can mislead buyers with legal obligations. Registries
+        SHOULD show it as a publisher claim, and SHOULD show whether the manifest is signed (RFC 0003).</li>
+      <li>The fields describe a product, never a person. They hold no personal data.</li>
+      <li>Consumers MUST validate codes against the schema before using them in queries, so an invalid code
+        cannot reach a registry's filter or search layer.</li>
+    </ul>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-bottom" style="border: none; justify-content: center;">
+      <div>MSR JSON RFC Series · Published under CC-BY 4.0</div>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-<!-- version: 1.3.0 | build: 2026-09-17 | update: 2026-09-18 -->
+<!-- version: 1.4.0 | build: 2026-09-17 | update: 2026-09-18 -->
 # MSR JSON — Specification
 
 [![validate](https://github.com/msr-standard/specification/actions/workflows/validate.yml/badge.svg)](https://github.com/msr-standard/specification/actions/workflows/validate.yml)
@@ -36,6 +36,7 @@ gatekeeper and no vendor who owns the format.
 | `schemas/msr-2.1-draft.json` | Experimental v2.1 draft — not ratified, do not author against it |
 | `examples/*.json` | Six reference manifests, one per entity type, each validating with zero errors |
 | `rfc/rfc-0001..0003.html` | The ratified RFCs |
+| `rfc/rfc-0006.html` | Working draft: geographic and language availability, in the v2.1 draft only |
 | `tests/` | The conformance suite below |
 
 ## The MSR JSON repositories

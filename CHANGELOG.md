@@ -1,4 +1,4 @@
-<!-- version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18 -->
+<!-- version: 1.1.0 | build: 2026-09-18 | update: 2026-09-18 -->
 # Changelog
 
 Changes to the MSR JSON specification and to this repository.
@@ -11,11 +11,20 @@ non-normative clarification is PATCH.
 
 ## [Unreleased]
 
-Editorial and repository changes only. **Nothing here changes what validates**:
-every manifest valid against 2.0.0 is still valid, and every invalid one is
-still invalid.
+**Nothing here changes what validates against 2.0.0**: every manifest valid
+against 2.0.0 is still valid, and every invalid one is still invalid. The one
+normative change is to the unratified v2.1 draft schema.
 
 ### Added
+
+- RFC 0006 (working draft), *Geographic and Language Availability*: an optional
+  `capabilities.availability` object in `schemas/msr-2.1-draft.json` with
+  `regions` (UN M49), `countries` and `excluded_countries` (ISO 3166-1
+  alpha-2), `languages` (BCP 47) and `data_residency` (country, M49 region or
+  `EU`). An absent field means not declared, never worldwide. The same draft
+  requires `entity.descriptions` keys to be BCP 47 tags. Covered by
+  `tests/test_availability.py`, which also asserts that the 2.0 schema keeps
+  rejecting the block.
 
 - `AGENTS.md` — instructions for AI agents of any model asked to generate an
   `msr.json`: the constant `protocol` block, a procedure that derives every

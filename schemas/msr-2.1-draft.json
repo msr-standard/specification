@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://msr-standard.org/schemas/msr-2.1-draft.json",
   "title": "MSR JSON Protocol Schema (v2.1 Draft)",
-  "description": "Experimental draft schema adding agent sandboxing, A2A messaging endpoints, and multi-signature attestation.",
+  "description": "Experimental draft schema adding agent sandboxing, A2A messaging endpoints, multi-signature attestation, and geographic and language availability (RFC-0006).",
   "type": "object",
   "required": [
     "$schema",
@@ -11,6 +11,55 @@
     "capabilities",
     "releases"
   ],
+  "$defs": {
+    "country_code": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "description": "ISO 3166-1 alpha-2 country code, uppercase (e.g. BR, PT, US). The exceptionally reserved EU is accepted for the European Union."
+    },
+    "region_code": {
+      "type": "string",
+      "enum": [
+        "001",
+        "002",
+        "003",
+        "005",
+        "009",
+        "011",
+        "013",
+        "014",
+        "015",
+        "017",
+        "018",
+        "019",
+        "021",
+        "029",
+        "030",
+        "034",
+        "035",
+        "039",
+        "053",
+        "054",
+        "057",
+        "061",
+        "142",
+        "143",
+        "145",
+        "150",
+        "151",
+        "154",
+        "155",
+        "202",
+        "419"
+      ],
+      "description": "UN M49 region code as used by BCP 47 and Unicode CLDR: 001 World, 002 Africa, 019 Americas, 142 Asia, 150 Europe, 009 Oceania, and their sub-regions (e.g. 419 Latin America and the Caribbean)."
+    },
+    "language_tag": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-(?:[A-Z]{2}|[0-9]{3}))?$",
+      "description": "BCP 47 language tag: language, optional script, optional region (e.g. en, pt-BR, es-419, zh-Hant-TW)."
+    }
+  },
   "properties": {
     "$schema": {
       "type": "string",
@@ -20,7 +69,16 @@
       "type": "object"
     },
     "entity": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "descriptions": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/language_tag"
+          },
+          "description": "Localized descriptions keyed by BCP 47 language tag (RFC-0006)."
+        }
+      }
     },
     "capabilities": {
       "type": "object",
@@ -59,6 +117,66 @@
                 "ephemeral",
                 "persistent"
               ]
+            }
+          }
+        },
+        "availability": {
+          "type": "object",
+          "description": "Experimental RFC-0006: where the product may be acquired and used, the languages it is offered in, and where customer data is stored. An absent field means not declared, never worldwide.",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "regions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/region_code"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Regions where the product is offered. [\"001\"] declares worldwide availability."
+            },
+            "countries": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/country_code"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Countries where the product is offered, in addition to any listed region."
+            },
+            "excluded_countries": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/country_code"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Countries where the product is not offered even though a listed region contains them. Exclusion wins over inclusion."
+            },
+            "languages": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/language_tag"
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Languages the product's user interface and documentation are available in."
+            },
+            "data_residency": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/country_code"
+                  },
+                  {
+                    "$ref": "#/$defs/region_code"
+                  }
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "description": "Countries or regions where customer data is stored and processed at rest."
             }
           }
         }
