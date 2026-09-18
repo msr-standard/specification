@@ -37,6 +37,18 @@ gatekeeper and no vendor who owns the format.
 | `rfc/rfc-0001..0003.html` | The ratified RFCs |
 | `tests/` | The conformance suite below |
 
+## The MSR JSON repositories
+
+| Repository | What it is | Status |
+| --- | --- | --- |
+| **specification** | This repository — the source of truth | Published |
+| [msr-validator](https://github.com/msr-standard/msr-validator) | Reference validator library, in Python | Not yet released |
+| [msr-cli](https://github.com/msr-standard/msr-cli) | Reference command-line tool, the `msr` command | Not yet released |
+
+Dependencies point one way only: `msr-cli` uses `msr-validator`, which bundles
+the schema from a pinned release of this repository. This repository depends on
+nothing. No other repository may keep its own copy of the schema.
+
 ## Generating a manifest with an AI agent
 
 [AGENTS.md](AGENTS.md) is written for AI agents of any model asked to create an
