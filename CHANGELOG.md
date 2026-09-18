@@ -5,7 +5,7 @@ Changes to the MSR JSON specification and to this repository.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning: [SemVer](https://semver.org/spec/v2.0.0.html), governed by the
-compatibility policy at <https://msr-standard.org/governance/>: a change that
+compatibility policy at <https://msrjson.org/governance/>: a change that
 alters what validates is MAJOR; a backwards-compatible addition is MINOR; a
 non-normative clarification is PATCH.
 
@@ -25,6 +25,11 @@ normative change is to the unratified v2.1 draft schema.
   requires `entity.descriptions` keys to be BCP 47 tags. Covered by
   `tests/test_availability.py`, which also asserts that the 2.0 schema keeps
   rejecting the block.
+- `README.md` and `AGENTS.md` point to where the files are served today,
+  `https://msrjson.org`, and to the repositories under `github.com/msrjson`.
+  The validation commands fetched `https://msr-standard.org/schemas/msr-2.0.json`,
+  which answers 404; they now fetch it from `msrjson.org`. The schema `$id` is
+  unchanged and is described as an identifier, not a download location.
 - `AGENTS.md` tells agents not to put `capabilities.availability` in a 2.0
   manifest, and that `vendor.country_code` is the vendor's seat, not a market.
 

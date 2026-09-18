@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 | build: 2026-09-18 | update: 2026-09-18 -->
+<!-- version: 1.2.0 | build: 2026-09-18 | update: 2026-09-18 -->
 # AGENTS.md — generating an MSR JSON manifest
 
 Instructions for AI agents (any model) asked to create or update an `msr.json`
@@ -21,11 +21,12 @@ listing.
 
 | What | Where |
 | --- | --- |
-| This repository — the source of truth | <https://github.com/msr-standard/specification> |
-| Canonical schema URL (goes in `$schema`) | `https://msr-standard.org/schemas/msr-2.0.json` |
+| This repository — the source of truth | <https://github.com/msrjson/specification> |
+| Canonical schema identifier (goes in `$schema`) | `https://msr-standard.org/schemas/msr-2.0.json` |
+| Schema file to download | <https://msrjson.org/schemas/msr-2.0.json> |
 | Schema file to validate against | `schemas/msr-2.0.json` in this repository |
 | Six complete, valid examples | `examples/*.json` in this repository |
-| Human-readable site | <https://msr-standard.org> |
+| Human-readable site | <https://msrjson.org> |
 
 If anything below disagrees with `schemas/msr-2.0.json`, the schema wins. Read
 enum values from the schema itself — never from memory, and never from this
@@ -113,14 +114,13 @@ checking. The following have all shipped wrongly before; each one is a bug:
 
 ## Validate
 
-Until `msr-standard.org` serves HTTPS, validate against the schema in this
-repository. Either tool works:
+Validate against the schema file served at `msrjson.org` (the same bytes as
+`schemas/msr-2.0.json` in this repository). Either tool works:
 
 ```bash
 # Python
 pip install jsonschema
-curl -sSfo /tmp/msr-2.0.json \
-  https://raw.githubusercontent.com/msr-standard/specification/main/schemas/msr-2.0.json
+curl -sSfo /tmp/msr-2.0.json https://msrjson.org/schemas/msr-2.0.json
 python -c "
 import json, sys
 from jsonschema import Draft202012Validator
@@ -136,14 +136,13 @@ print('valid: 0 errors')
 ```bash
 # Standalone CLI
 pip install check-jsonschema
-check-jsonschema --schemafile \
-  https://raw.githubusercontent.com/msr-standard/specification/main/schemas/msr-2.0.json \
+check-jsonschema --schemafile https://msrjson.org/schemas/msr-2.0.json \
   .well-known/msr.json
 ```
 
 The `$schema` field inside the manifest still points at the canonical
-`https://msr-standard.org/schemas/msr-2.0.json`. Only the validator fetches the
-file from GitHub.
+`https://msr-standard.org/schemas/msr-2.0.json`, the schema's `$id`. Only the
+validator fetches the file, from `msrjson.org`.
 
 ## Report back
 

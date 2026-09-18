@@ -1,18 +1,21 @@
-<!-- version: 1.4.0 | build: 2026-09-17 | update: 2026-09-18 -->
+<!-- version: 1.5.0 | build: 2026-09-17 | update: 2026-09-18 -->
 # MSR JSON — Specification
 
-[![validate](https://github.com/msr-standard/specification/actions/workflows/validate.yml/badge.svg)](https://github.com/msr-standard/specification/actions/workflows/validate.yml)
+[![validate](https://github.com/msrjson/specification/actions/workflows/validate.yml/badge.svg)](https://github.com/msrjson/specification/actions/workflows/validate.yml)
 [![Specification: CC-BY-4.0](https://img.shields.io/badge/specification-CC--BY--4.0-blue.svg)](LICENSE-SPEC)
 [![Tooling: MIT](https://img.shields.io/badge/tooling-MIT-green.svg)](LICENSE)
 
 The normative artifacts of the **MSR JSON** open metadata protocol: the JSON
-Schemas, the reference manifests and the ratified RFCs.
+Schemas, the reference manifests and the RFCs, ratified and in draft.
 
-This repository is the **single source of truth**. <https://msr-standard.org>
-serves these files at their canonical URLs and consumes this repository directly;
-it never keeps its own copy. If the two ever disagree, this repository is right.
+This repository is the **single source of truth**. <https://msrjson.org>
+serves these files and consumes this repository directly; it never keeps its
+own copy. If the two ever disagree, this repository is right.
 
-Canonical schema: **<https://msr-standard.org/schemas/msr-2.0.json>**
+- Schema file: **<https://msrjson.org/schemas/msr-2.0.json>**
+- Schema identifier (`$id`, and what a manifest puts in `$schema`):
+  `https://msr-standard.org/schemas/msr-2.0.json`. It is an identifier, not a
+  download location: that domain does not serve the file today.
 
 ## What MSR JSON is
 
@@ -44,8 +47,8 @@ gatekeeper and no vendor who owns the format.
 | Repository | What it is | Status |
 | --- | --- | --- |
 | **specification** | This repository — the source of truth | Published |
-| [msr-validator](https://github.com/msr-standard/msr-validator) | Reference validator library, in Python | Not yet released |
-| [msr-cli](https://github.com/msr-standard/msr-cli) | Reference command-line tool, the `msr` command | Not yet released |
+| [msr-validator](https://github.com/msrjson/msr-validator) | Reference validator library, in Python | Not yet released |
+| [msr-cli](https://github.com/msrjson/msr-cli) | Reference command-line tool, the `msr` command | Not yet released |
 
 Dependencies point one way only: `msr-cli` uses `msr-validator`, which bundles
 the schema from a pinned release of this repository. This repository depends on
@@ -78,7 +81,7 @@ To validate a manifest of your own:
 ```bash
 pip install check-jsonschema
 check-jsonschema \
-  --schemafile https://msr-standard.org/schemas/msr-2.0.json \
+  --schemafile https://msrjson.org/schemas/msr-2.0.json \
   .well-known/msr.json
 ```
 
@@ -97,7 +100,7 @@ before a 30-day call for consensus.
 
 A change that alters *what validates* is a MAJOR version under the compatibility
 policy. Additive, backwards-compatible changes are MINOR. See
-<https://msr-standard.org/governance/>.
+<https://msrjson.org/governance/>.
 
 Typos, broken examples and documentation corrections are ordinary pull requests
 and are welcome as such.
