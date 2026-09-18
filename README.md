@@ -85,4 +85,6 @@ Dual-licensed, deliberately:
   privatized, patented or encumbered by fees.
 - **Tests and CI** — [MIT](LICENSE).
 
+The scope of each license is stated in [NOTICE](NOTICE).
+
 Implementing MSR JSON requires no permission, no fee and no registration.

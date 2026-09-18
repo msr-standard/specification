@@ -1,0 +1,22 @@
+MSR JSON — licensing scope
+==========================
+
+This project is deliberately dual-licensed, because the two kinds of content in
+it need different guarantees.
+
+CC-BY-4.0 — see LICENSE-SPEC
+    The specification text, the JSON Schemas under schemas/, the example
+    manifests under examples/ and the RFC documents under rfc/.
+
+    A standard has to be free to implement, quote and translate by anyone,
+    forever, with attribution and without permission, a fee or registration.
+    It cannot be privatized, patented or encumbered.
+
+MIT — see LICENSE
+    The tests, the continuous integration configuration and any reference
+    tooling in this repository.
+
+    Reference code should be reusable with no strings attached, including in
+    proprietary implementations.
+
+Implementing MSR JSON requires no permission from anyone.
