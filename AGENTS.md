@@ -1,4 +1,4 @@
-<!-- version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18 -->
+<!-- version: 1.1.0 | build: 2026-09-18 | update: 2026-09-18 -->
 # AGENTS.md — generating an MSR JSON manifest
 
 Instructions for AI agents (any model) asked to create or update an `msr.json`
@@ -102,6 +102,10 @@ checking. The following have all shipped wrongly before; each one is a bug:
 - `entity.descriptions` is keyed by language; each language requires `summary`
   (max 256 characters). `tagline` is optional (max 140).
 - `vendor.country_code` is ISO 3166-1 alpha-2 in upper case (`BR`, not `br`).
+  It is where the vendor is based, not where the product is offered.
+- Do not add `capabilities.availability` (regions, countries, languages,
+  currencies, data residency) to a 2.0 manifest. It exists only in the
+  unratified 2.1 draft (RFC 0006), and the 2.0 schema rejects it.
 - `published_at` / `verified_at` are RFC 3339 date-times with a timezone:
   `2026-09-17T00:00:00Z`.
 - The schema is strict: `additionalProperties: false` at every level. A field

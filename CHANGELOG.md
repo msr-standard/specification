@@ -25,6 +25,8 @@ normative change is to the unratified v2.1 draft schema.
   requires `entity.descriptions` keys to be BCP 47 tags. Covered by
   `tests/test_availability.py`, which also asserts that the 2.0 schema keeps
   rejecting the block.
+- `AGENTS.md` tells agents not to put `capabilities.availability` in a 2.0
+  manifest, and that `vendor.country_code` is the vendor's seat, not a market.
 
 - `AGENTS.md` — instructions for AI agents of any model asked to generate an
   `msr.json`: the constant `protocol` block, a procedure that derives every
