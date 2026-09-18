@@ -1,3 +1,4 @@
+<!-- version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18 -->
 # AGENTS.md — generating an MSR JSON manifest
 
 Instructions for AI agents (any model) asked to create or update an `msr.json`

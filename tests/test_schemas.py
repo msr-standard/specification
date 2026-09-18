@@ -1,3 +1,4 @@
+# version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18
 """Conformance suite for the MSR JSON normative artifacts.
 
 Everything here runs from a plain checkout with no container, no network and no

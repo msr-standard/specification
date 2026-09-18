@@ -1,3 +1,4 @@
+<!-- version: 1.3.0 | build: 2026-09-17 | update: 2026-09-18 -->
 # MSR JSON — Specification
 
 [![validate](https://github.com/msr-standard/specification/actions/workflows/validate.yml/badge.svg)](https://github.com/msr-standard/specification/actions/workflows/validate.yml)
@@ -79,6 +80,11 @@ check-jsonschema \
   --schemafile https://msr-standard.org/schemas/msr-2.0.json \
   .well-known/msr.json
 ```
+
+## Changelog
+
+Every change to the specification and to this repository is recorded in
+[CHANGELOG.md](CHANGELOG.md), with its effect on what validates.
 
 ## Changing the protocol
 

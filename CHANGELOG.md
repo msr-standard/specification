@@ -1,0 +1,56 @@
+<!-- version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18 -->
+# Changelog
+
+Changes to the MSR JSON specification and to this repository.
+
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+Versioning: [SemVer](https://semver.org/spec/v2.0.0.html), governed by the
+compatibility policy at <https://msr-standard.org/governance/>: a change that
+alters what validates is MAJOR; a backwards-compatible addition is MINOR; a
+non-normative clarification is PATCH.
+
+## [Unreleased]
+
+Editorial and repository changes only. **Nothing here changes what validates**:
+every manifest valid against 2.0.0 is still valid, and every invalid one is
+still invalid.
+
+### Added
+
+- `AGENTS.md` — instructions for AI agents of any model asked to generate an
+  `msr.json`: the constant `protocol` block, a procedure that derives every
+  value from the project, the values that must never be invented, and a
+  validation command tested against a valid and an invalid manifest.
+- `AUTHORS` and `NOTICE`, crediting Antonio Santos as the author of the
+  protocol and stating the scope of each license.
+- `LICENSE` (MIT, for the tests and CI) and `LICENSE-SPEC` (CC-BY-4.0, full
+  legal text, for the specification, schemas, examples and RFCs). The dual
+  license had been claimed on the website but existed in no file.
+- A conformance suite that runs from a plain checkout, with no container and no
+  network, and a GitHub Actions workflow running it on every push and pull
+  request.
+- A test that the canonical schema's `$id` is the canonical URL, so a fork
+  cannot silently become a second protocol.
+
+### Changed
+
+- `protocol.author` in the six reference manifests names Antonio Santos, the
+  author of the protocol, instead of a working group. The field names who wrote
+  the **protocol**; a product's owner goes in `entity.vendor`.
+
+## [2.0.0] — 2026-09-17
+
+The current stable protocol. First version published in this repository.
+
+RFC 0001: consolidation of the entity archetype, native MCP and AI descriptors,
+integer minor currency units, and Ed25519 trust signatures.
+
+## Earlier versions
+
+Recorded on the specification page, which predates this repository. Their
+history is not in this repository's git log.
+
+- **1.1.0** — 2025-11-20 — legacy bridge. Added webhook synchronization headers
+  and JSON Schema validation. Its schema is `schemas/msr-1.1.json`.
+- **1.0.0** — 2024-04-10 — deprecated. The initial JSON translation of the
+  legacy ASP PAD XML standard.
