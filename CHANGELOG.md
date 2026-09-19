@@ -17,6 +17,11 @@ normative change is to the unratified v2.1 draft schema.
 
 ### Added
 
+- RFC 0007 (working draft), *Software Registry Conformance, Ingestion & Interoperability Specification*:
+  specifies normative requirements for software registries and crawlers (Zero-Account URL Ingestion,
+  SSRF and DoS network protection, semantic cache polling via ETag/If-Modified-Since, PAD JSON transition
+  dialect normalization, domain authority/claim verification, and the zero-drift rule prohibiting canonical
+  schema forking).
 - RFC 0006 (working draft), *Geographic and Language Availability*: an optional
   `capabilities.availability` object in `schemas/msr-2.1-draft.json` with
   `regions` (UN M49), `countries` and `excluded_countries` (ISO 3166-1

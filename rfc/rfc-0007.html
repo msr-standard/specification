@@ -1,0 +1,215 @@
+<!-- version: 1.0.0 | build: 2026-09-19 | update: 2026-09-19 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFC 0007 — Software Registry Conformance, Ingestion &amp; Interoperability | MSR JSON</title>
+  <link rel="canonical" href="https://msrjson.org/rfc/rfc-0007.html">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-link">
+        <img src="/assets/img/msr-logo.svg" alt="MSR JSON" class="brand-logo">
+      </a>
+      <div class="nav-meta-badge">
+        <span class="dot"></span> Protocol v2.0.0
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="max-width: 860px;">
+    <div style="margin-bottom: 2rem;">
+      <a href="/rfc/" style="font-size: 0.875rem; color: var(--text-subtle);">← Back to RFC Index</a>
+    </div>
+
+    <div
+      style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.5rem; font-family: var(--font-mono); font-size: 0.8125rem; margin-bottom: 2rem;">
+      <div><strong>RFC:</strong> 0007</div>
+      <div><strong>Title:</strong> Software Registry Conformance, Ingestion &amp; Interoperability Specification</div>
+      <div><strong>Author:</strong> Protocol Stewards &amp; Registry Interoperability WG</div>
+      <div><strong>Status:</strong> Working Draft — Open for Review</div>
+      <div><strong>Date:</strong> 2026-09-19</div>
+    </div>
+
+    <h2>1. Scope &amp; Architectural Boundary</h2>
+    <p>
+      This document defines the normative requirements for software directories, catalog registries, aggregators, and
+      automated crawlers (collectively termed <strong>Registries</strong>) that consume, index, and present MSR JSON
+      manifests.
+    </p>
+    <p>
+      The <strong>MSR Standard</strong> is an open, independent protocol. A registry (such as MySoftRank, a package
+      index,
+      or an AI discovery agent) is an independent consumer implementation. To claim <strong>MSR Conformance</strong>,
+      a registry MUST satisfy the ingestion, network safety, cache discipline, and schema fidelity rules specified
+      herein.
+    </p>
+
+    <h2>2. Zero-Account Ingestion &amp; Canonical Discovery</h2>
+    <p>
+      Traditional software directories require manual, multi-page form registration behind vendor accounts, causing
+      stale
+      metadata and high onboarding friction. Conforming registries MUST support automated manifest ingestion:
+    </p>
+    <ul>
+      <li><strong>Canonical Discovery:</strong> Registries MUST support automatic resolution of manifests at the
+        well-known
+        URI specified in RFC 0001: <code>https://&lt;primary_domain&gt;/.well-known/msr.json</code>.</li>
+      <li><strong>Zero-Account Ingestion:</strong> Registries SHOULD provide an open submission interface allowing any
+        user,
+        developer, or agent to submit a manifest URI without requiring prior user account registration.</li>
+      <li><strong>Domain-Bound Authority:</strong> Serving a valid manifest over TLS at the product's official root
+        domain
+        (<code>entity.primary_domain</code>) constitutes primary cryptographic and transport authority for technical
+        product metadata. Registries MUST treat this source as authoritative over unverified third-party submissions.
+      </li>
+    </ul>
+
+    <h2>3. Network Safety &amp; SSRF Defense</h2>
+    <p>
+      Allowing arbitrary URL intake introduces Server-Side Request Forgery (SSRF) and resource exhaustion risks. Any
+      crawler or ingestion pipeline in a conforming registry MUST enforce the following safeguards prior to making
+      outbound HTTP requests:
+    </p>
+    <ol>
+      <li><strong>Pre-Flight DNS Resolution:</strong> The registry crawler MUST resolve target hostnames before issuing
+        requests and strictly reject:
+        <ul>
+          <li>Loopback addresses (<code>127.0.0.0/8</code>, <code>::1</code>).</li>
+          <li>RFC 1918 private subnets (<code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>,
+            <code>192.168.0.0/16</code>).</li>
+          <li>Link-local and cloud provider metadata addresses (<code>169.254.0.0/16</code>, <code>fe80::/10</code>).
+          </li>
+        </ul>
+      </li>
+      <li><strong>Redirect Re-Validation:</strong> HTTP redirects (<code>301</code>, <code>302</code>, <code>307</code>,
+        <code>308</code>) MUST be validated against the same IP safety filters at every hop. Registries MUST limit
+        redirect depth to a maximum of 5 hops.
+      </li>
+      <li><strong>Protocol &amp; Port Enforcement:</strong> Only <code>https://</code> (and optionally
+        <code>http://</code>
+        for local sandbox testing) on default ports (443 and 80) is permitted. Custom ports are forbidden.</li>
+      <li><strong>Resource Caps:</strong> Connection timeouts MUST NOT exceed 8 seconds. Payload downloads MUST be
+        capped at 1 MB; larger files MUST terminate the connection immediately to prevent memory exhaustion attacks.
+      </li>
+    </ol>
+
+    <h2>4. Semantic Caching &amp; Polling Discipline</h2>
+    <p>
+      Registries MUST be good citizens of the open web and avoid hammering vendor infrastructure:
+    </p>
+    <ul>
+      <li><strong>Conditional Requests:</strong> Registries MUST store the <code>ETag</code> and
+        <code>Last-Modified</code> response headers returned by publishers. Periodic refresh crawlers MUST send
+        <code>If-None-Match</code> and <code>If-Modified-Since</code> headers.
+      </li>
+      <li><strong>304 Handling:</strong> On receiving <code>304 Not Modified</code>, registries MUST NOT re-parse the
+        manifest or alter database records.</li>
+      <li><strong>Polling Intervals:</strong> Automated crawling intervals MUST NOT exceed once per 6 hours per domain,
+        except when triggered by explicit author webhooks or manual cache purge requests.</li>
+      <li><strong>Backoff Etiquette:</strong> When a publisher server returns HTTP <code>429 Too Many Requests</code> or
+        <code>5xx</code>, the registry MUST respect <code>Retry-After</code> headers and apply exponential backoff.
+      </li>
+    </ul>
+
+    <h2>5. Ingestion Dialects &amp; Canonical Normalization</h2>
+    <p>
+      To facilitate ecosystem migration while preserving the integrity of MSR JSON, registries MAY accept legacy and
+      transitional formats, provided they are normalized to the canonical schema:
+    </p>
+
+    <div class="table-wrapper">
+      <table class="tech-table">
+        <thead>
+          <tr>
+            <th>Format Dialect</th>
+            <th>Parser Requirement</th>
+            <th>Normalization Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>msr.json</code> (Canonical)</td>
+            <td>Direct validation against JSON Schema (Draft 2020-12)</td>
+            <td>Canonical model without mutation.</td>
+          </tr>
+          <tr>
+            <td><code>pad.json</code> (Transition Dialect)</td>
+            <td>Native JSON key-value mapper</td>
+            <td>Normalized into <code>msr.json v2.0</code> structures.</td>
+          </tr>
+          <tr>
+            <td><code>pad.xml</code> (ASP PAD 4.0)</td>
+            <td>Hardened defensive XML parser (e.g. <code>defusedxml</code> to prevent XXE / entity expansions)</td>
+            <td>Normalized into <code>msr.json v2.0</code> structures.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Normalization Rules</h3>
+    <ul>
+      <li><strong>Monetary Integrity:</strong> Floating-point values (e.g. <code>Program_Cost_Dollars: 29.99</code>)
+        MUST
+        be normalized to exact integer minor units (<code>starting_price_cents: 2999</code>) accompanied by an ISO 4217
+        currency code (<code>"USD"</code>).</li>
+      <li><strong>Language Localization:</strong> Legacy descriptions (e.g. <code>Char_Desc_250</code>) MUST be assigned
+        to explicit BCP 47 language tags (e.g. <code>entity.descriptions.en.summary</code>).</li>
+      <li><strong>Semantic Versioning:</strong> Non-conforming version strings MUST be converted or annotated to comply
+        with SemVer 2.0 syntax.</li>
+      <li><strong>Artifact Integrity:</strong> Legacy download URLs (e.g. <code>Primary_Download_URL</code>) mapped into
+        <code>releases.latest.artifacts[]</code> MUST be flagged with <code>"verified": false</code> until an SHA-256
+        digest is independently computed or verified.
+      </li>
+    </ul>
+
+    <h2>6. Domain Authority vs. Vendor Claim Verification</h2>
+    <p>
+      While submission and read-only indexing are zero-account and frictionless, administrative control over a registry
+      listing requires verified domain authority:
+    </p>
+    <ul>
+      <li><strong>Read &amp; Sync Tier:</strong> Open to all. Any agent or user can trigger synchronization of a
+        publicly
+        accessible manifest. The manifest's domain is authoritative for product information.</li>
+      <li><strong>Vendor Claim Tier:</strong> Actions such as replying to user reviews, configuring paid sponsorship
+        placements, or managing private analytics MUST require domain ownership verification via:
+        <ol>
+          <li><strong>DNS TXT Challenge:</strong> A DNS record matching <code>_msr-challenge=&lt;token&gt;</code> on
+            the <code>entity.primary_domain</code>.</li>
+          <li><strong>Domain Email Confirmation:</strong> Verification email dispatched to an address under the same
+            domain (e.g. <code>security@&lt;primary_domain&gt;</code>).</li>
+          <li><strong>Cryptographic Signature:</strong> Manifest signed with an Ed25519 key registered in DNS per RFC
+            0003.</li>
+        </ol>
+      </li>
+    </ul>
+
+    <h2>7. Zero-Drift Rule: Non-Corruption of the Canonical Schema</h2>
+    <p>
+      A registry MUST NOT fork, mutate, or introduce proprietary enum values into the canonical schema while referencing
+      the canonical schema identifier <code>https://msrjson.org/schemas/msr-2.0.json</code>.
+    </p>
+    <p>
+      Registry-specific operational attributes (e.g. internal review aggregations, editorial rankings, click counters,
+      sponsorship flags) MUST be stored in the registry's own private database. They MUST NOT be injected into published
+      MSR JSON manifests.
+    </p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-bottom" style="border: none; justify-content: center;">
+      <div>MSR JSON RFC Series · Published under CC-BY 4.0</div>
+    </div>
+  </footer>
+</body>
+
+</html>
