@@ -1,4 +1,4 @@
-# version: 1.1.0 | build: 2026-09-18 | update: 2026-09-18
+# version: 1.1.1 | build: 2026-09-18 | update: 2026-09-19
 """RFC-0006: geographic and language availability, in the v2.1 draft schema.
 
 The block lives only in the draft. Stable 2.0 manifests are untouched, and the
@@ -42,7 +42,7 @@ def draft():
 @pytest.fixture
 def manifest():
     data = _load(ROOT / "examples" / "saas.json")
-    data["$schema"] = "https://msr-standard.org/schemas/msr-2.1-draft.json"
+    data["$schema"] = "https://msrjson.org/schemas/msr-2.1-draft.json"
     data["capabilities"]["availability"] = copy.deepcopy(AVAILABILITY)
     return data
 
@@ -120,5 +120,5 @@ def test_description_keys_must_be_language_tags(draft, manifest):
 def test_stable_schema_still_rejects_the_block(manifest):
     """2.0 is closed: the block cannot leak into stable manifests."""
     stable = Draft202012Validator(_load(STABLE_SCHEMA))
-    manifest["$schema"] = "https://msr-standard.org/schemas/msr-2.0.json"
+    manifest["$schema"] = "https://msrjson.org/schemas/msr-2.0.json"
     assert any("Additional properties" in m for m in _errors(stable, manifest))

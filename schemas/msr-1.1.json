@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "https://msr-standard.org/schemas/msr-1.1.json",
+  "$id": "https://msrjson.org/schemas/msr-1.1.json",
   "title": "MSR JSON Protocol Schema (Legacy v1.1)",
   "description": "Legacy compatibility schema bridging PAD XML v3/v4 to initial JSON representation.",
   "type": "object",

@@ -1,4 +1,4 @@
-<!-- version: 1.5.0 | build: 2026-09-17 | update: 2026-09-18 -->
+<!-- version: 1.6.0 | build: 2026-09-17 | update: 2026-09-19 -->
 # MSR JSON — Specification
 
 [![validate](https://github.com/msrjson/specification/actions/workflows/validate.yml/badge.svg)](https://github.com/msrjson/specification/actions/workflows/validate.yml)
@@ -12,10 +12,11 @@ This repository is the **single source of truth**. <https://msrjson.org>
 serves these files and consumes this repository directly; it never keeps its
 own copy. If the two ever disagree, this repository is right.
 
-- Schema file: **<https://msrjson.org/schemas/msr-2.0.json>**
-- Schema identifier (`$id`, and what a manifest puts in `$schema`):
-  `https://msr-standard.org/schemas/msr-2.0.json`. It is an identifier, not a
-  download location: that domain does not serve the file today.
+Canonical schema: **<https://msrjson.org/schemas/msr-2.0.json>**. It is
+the schema's `$id`, what a manifest puts in `$schema`, and the address the file
+is served from. Manifests published before 2026-09-19 name the same schema as
+`https://msr-standard.org/schemas/msr-2.0.json`; that identifier stays valid
+as an alias, and registries resolve it to the URL above.
 
 ## What MSR JSON is
 

@@ -1,4 +1,4 @@
-# version: 1.0.0 | build: 2026-09-18 | update: 2026-09-18
+# version: 1.1.0 | build: 2026-09-18 | update: 2026-09-19
 """Conformance suite for the MSR JSON normative artifacts.
 
 Everything here runs from a plain checkout with no container, no network and no
@@ -48,7 +48,7 @@ def test_canonical_schema_is_valid_draft_2020_12(msr_schema):
 
 def test_canonical_schema_id_is_the_canonical_url(msr_schema):
     """Project rule 1: every schema reference resolves to the canonical URL."""
-    assert msr_schema["$id"] == "https://msr-standard.org/schemas/msr-2.0.json", (
+    assert msr_schema["$id"] == "https://msrjson.org/schemas/msr-2.0.json", (
         "The $id is how a manifest names the schema it was authored against. "
         "A fork that changes it silently creates a second, incompatible protocol."
     )
@@ -68,10 +68,21 @@ def test_all_example_manifests_strictly_validate(validator):
         )
 
 
+def test_manifest_naming_the_former_schema_identifier_still_validates(validator, saas_manifest):
+    """The $id moved from msr-standard.org to msrjson.org on 2026-09-19.
+
+    Manifests already published carry the former identifier in $schema; the
+    move must not make any of them invalid.
+    """
+    manifest = dict(saas_manifest)
+    manifest["$schema"] = "https://msr-standard.org/schemas/msr-2.0.json"
+    assert not list(validator.iter_errors(manifest))
+
+
 def test_negative_missing_required_fields(validator):
     """Ensure manifests missing required top-level keys are rejected."""
     bad_manifest = {
-        "$schema": "https://msr-standard.org/schemas/msr-2.0.json",
+        "$schema": "https://msrjson.org/schemas/msr-2.0.json",
         "protocol": {
             "name": "MSR JSON",
             "version": "2.0.0",

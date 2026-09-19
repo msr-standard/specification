@@ -1,4 +1,4 @@
-<!-- version: 1.2.0 | build: 2026-09-18 | update: 2026-09-18 -->
+<!-- version: 1.3.0 | build: 2026-09-18 | update: 2026-09-19 -->
 # AGENTS.md — generating an MSR JSON manifest
 
 Instructions for AI agents (any model) asked to create or update an `msr.json`
@@ -22,8 +22,7 @@ listing.
 | What | Where |
 | --- | --- |
 | This repository — the source of truth | <https://github.com/msrjson/specification> |
-| Canonical schema identifier (goes in `$schema`) | `https://msr-standard.org/schemas/msr-2.0.json` |
-| Schema file to download | <https://msrjson.org/schemas/msr-2.0.json> |
+| Canonical schema URL (goes in `$schema`) | `https://msrjson.org/schemas/msr-2.0.json` |
 | Schema file to validate against | `schemas/msr-2.0.json` in this repository |
 | Six complete, valid examples | `examples/*.json` in this repository |
 | Human-readable site | <https://msrjson.org> |
@@ -140,9 +139,8 @@ check-jsonschema --schemafile https://msrjson.org/schemas/msr-2.0.json \
   .well-known/msr.json
 ```
 
-The `$schema` field inside the manifest still points at the canonical
-`https://msr-standard.org/schemas/msr-2.0.json`, the schema's `$id`. Only the
-validator fetches the file, from `msrjson.org`.
+The `$schema` field inside the manifest carries the same URL, the schema's
+`$id`.
 
 ## Report back
 

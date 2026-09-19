@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://msr-standard.org/schemas/msr-2.1-draft.json",
+  "$id": "https://msrjson.org/schemas/msr-2.1-draft.json",
   "title": "MSR JSON Protocol Schema (v2.1 Draft)",
   "description": "Experimental draft schema adding agent sandboxing, A2A messaging endpoints, multi-signature attestation, and geographic and language availability (RFC-0006).",
   "type": "object",

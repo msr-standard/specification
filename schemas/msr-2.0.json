@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://msr-standard.org/schemas/msr-2.0.json",
+  "$id": "https://msrjson.org/schemas/msr-2.0.json",
   "title": "MSR JSON Protocol Schema",
   "description": "Canonical JSON Schema for MSR JSON v2.0 software, API, MCP server, and AI agent manifests.",
   "type": "object",

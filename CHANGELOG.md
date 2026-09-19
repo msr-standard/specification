@@ -1,4 +1,4 @@
-<!-- version: 1.1.0 | build: 2026-09-18 | update: 2026-09-18 -->
+<!-- version: 1.2.0 | build: 2026-09-18 | update: 2026-09-19 -->
 # Changelog
 
 Changes to the MSR JSON specification and to this repository.
@@ -49,6 +49,14 @@ normative change is to the unratified v2.1 draft schema.
   cannot silently become a second protocol.
 
 ### Changed
+
+- **The canonical domain is `msrjson.org`.** The `$id` of `msr-1.1.json`,
+  `msr-2.0.json` and `msr-2.1-draft.json`, the `$schema` of the six reference
+  manifests, the RFC canonical links, `AUTHORS`, `README.md` and `AGENTS.md`
+  move from `https://msr-standard.org` to `https://msrjson.org`, the address the
+  files are actually served from. What validates does not change: `$schema` is
+  a URI, not a constant, and a test asserts that a manifest naming the former
+  identifier still validates. Registries treat the former URL as an alias.
 
 - `protocol.author` in the six reference manifests names Antonio Santos, the
   author of the protocol, instead of a working group. The field names who wrote
