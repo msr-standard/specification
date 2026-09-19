@@ -1,2 +1,2 @@
-# MSR Standard Automated Test Suite
+# MSR JSON Automated Test Suite
 

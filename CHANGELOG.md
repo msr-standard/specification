@@ -50,6 +50,9 @@ normative change is to the unratified v2.1 draft schema.
 
 ### Changed
 
+- The project is named **MSR JSON** everywhere it names itself: RFC page titles
+  and logo text say "MSR JSON" instead of "MSR Standard".
+
 - **The canonical domain is `msrjson.org`.** The `$id` of `msr-1.1.json`,
   `msr-2.0.json` and `msr-2.1-draft.json`, the `$schema` of the six reference
   manifests, the RFC canonical links, `AUTHORS`, `README.md` and `AGENTS.md`
